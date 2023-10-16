@@ -1,12 +1,16 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
+#include "lifegame.h"
 
-#define MAX_ROWS 100
-#define MAX_COLS 100
+#define MAX_ROWS 10
+#define MAX_COLS 10
 
 int main() {
     // Déclarez le tableau à deux dimensions et d'autres variables
+    int world[MAX_ROWS][MAX_COLS] = {0};
     int lignes, colonnes;
+    int nb_generations=0;
     char world_configuration[] = "../World_configuration.txt";
 
     // Ouvrez le fichier en mode lecture
@@ -23,7 +27,7 @@ int main() {
             fclose(fichier);
             return 1;
         }
-        int world[lignes][colonnes];
+
         // Lecture des états des cellules et initialisation du tableau
         for (int i = 0; i < lignes; i++) {
             for (int j = 0; j < colonnes; j++) {
@@ -39,13 +43,29 @@ int main() {
         fclose(fichier);
 
         // Afficher le tableau
-        printf("Tableau initialise a partir du fichier :\n");
-        for (int i = 0; i < lignes; i++) {
-            for (int j = 0; j < colonnes; j++) {
+        for (int i = 0; i < MAX_ROWS; i++) {
+            for (int j = 0; j < MAX_COLS; j++) {
                 printf("%d ", world[i][j]);
             }
             printf("\n");
         }
+
+        /**
+         * Faire une boucle infinie pour appeler next_generation()
+         * Avoir une fonction sleep de quelques secondes
+         * **/
+        do {
+            next_generation();
+            // Afficher le tableau
+            for (int i = 0; i < MAX_ROWS; i++) {
+                for (int j = 0; j < MAX_COLS; j++) {
+                    printf("%d ", world[i][j]);
+                }
+                printf("\n");
+            }
+            sleep(3);
+            nb_generations++;
+        }while(nb_generations!=5);
     }
 
 
