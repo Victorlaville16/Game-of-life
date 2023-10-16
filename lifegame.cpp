@@ -61,6 +61,7 @@ int num_neighbors(int x, int y, int tableau[100][100]){ //prendre en compte les 
             }
         }
     }
+    return nbCellulesVivantes;
 
 
 
