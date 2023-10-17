@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "lifegame.h"
+#include "gamelife.h"
 
 #define MAX_ROWS 10
 #define MAX_COLS 10
@@ -45,7 +45,12 @@ int main() {
         // Afficher le tableau
         for (int i = 0; i < MAX_ROWS; i++) {
             for (int j = 0; j < MAX_COLS; j++) {
-                printf("%d ", world[i][j]);
+                if(world[i][j]==0){
+                    printf(" ");
+                }else
+                    printf("*");
+
+
             }
             printf("\n");
         }
@@ -55,24 +60,21 @@ int main() {
          * Avoir une fonction sleep de quelques secondes
          * **/
         do {
-            next_generation();
+            printf("\n\n\n\n");
+            next_generation(world);
             // Afficher le tableau
             for (int i = 0; i < MAX_ROWS; i++) {
                 for (int j = 0; j < MAX_COLS; j++) {
-                    printf("%d ", world[i][j]);
+                    if(world[i][j]==0){
+                        printf(" ");
+                    }else
+                        printf("*");
                 }
                 printf("\n");
             }
-            sleep(3);
+            sleep(2);
             nb_generations++;
-        }while(nb_generations!=5);
+        }while(nb_generations!=15);
     }
-
-
-
-
-
-
-
     return 0;
 }
