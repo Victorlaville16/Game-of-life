@@ -60,7 +60,7 @@ int SDL_main(int argc, char *argv[]) {
 
         SDL_Event event;
 
-        while(!quit){
+        while(!quit && nb_generations <= 100){
             SDL_PollEvent(&event);
             if (event.type == SDL_QUIT) {
                 quit = 1;
@@ -76,7 +76,7 @@ int SDL_main(int argc, char *argv[]) {
                 }
                 printf("\n");
             }*/
-            SDL_Delay(1000);
+            SDL_Delay(100);
             next_generation(world);
             nb_generations++;
         }
