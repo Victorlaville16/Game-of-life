@@ -10,6 +10,7 @@ int SDL_main(int argc, char *argv[]) {
     int world[MAX_ROWS][MAX_COLS] = {0};
     int lignes, colonnes;
     int nb_generations=0;
+    int pause = 0;
     char world_configuration[] = "../World_configuration.txt";
 
     // Ouvrez le fichier en mode lecture
@@ -64,7 +65,11 @@ int SDL_main(int argc, char *argv[]) {
             SDL_PollEvent(&event);
             if (event.type == SDL_QUIT) {
                 quit = 1;
-            } else{}
+            } else if (event.type == SDL_KEYDOWN) {
+                if (event.key.keysym.sym == SDLK_SPACE) {
+                    pause =  pause^1;
+                }
+            }
             // Afficher le tableau
             drawWorld(renderer, world);
             /*for (int i = 0; i < MAX_ROWS; i++) {
@@ -77,8 +82,10 @@ int SDL_main(int argc, char *argv[]) {
                 printf("\n");
             }*/
             SDL_Delay(100);
-            next_generation(world);
-            nb_generations++;
+            if (!pause){
+                next_generation(world);
+                nb_generations++;
+            }
         }
         // Nettoyez et quittez SDL à la fin
         SDL_DestroyRenderer(renderer);
