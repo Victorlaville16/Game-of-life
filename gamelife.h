@@ -5,8 +5,8 @@
 #ifndef GAME_OF_LIFE_LIFEGAME_H
 #define GAME_OF_LIFE_LIFEGAME_H
 
-#define MAX_ROWS 10
-#define MAX_COLS 10
+#define MAX_ROWS 30
+#define MAX_COLS 30
 
 void next_generation(int world[MAX_ROWS][MAX_COLS]);
 void finalize_evolution();

@@ -2,11 +2,10 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "gamelife.h"
+#include "graphics.h"
 
-#define MAX_ROWS 10
-#define MAX_COLS 10
-
-int main() {
+int SDL_main(int argc, char *argv[]) {
+    int quit= 0;
     // Déclarez le tableau à deux dimensions et d'autres variables
     int world[MAX_ROWS][MAX_COLS] = {0};
     int lignes, colonnes;
@@ -43,27 +42,32 @@ int main() {
         fclose(fichier);
 
         // Afficher le tableau
-        for (int i = 0; i < MAX_ROWS; i++) {
+        /*for (int i = 0; i < MAX_ROWS; i++) {
             for (int j = 0; j < MAX_COLS; j++) {
                 if(world[i][j]==0){
                     printf(" ");
                 }else
                     printf("*");
-
-
             }
             printf("\n");
-        }
+        }*/
 
-        /**
-         * Faire une boucle infinie pour appeler next_generation()
-         * Avoir une fonction sleep de quelques secondes
-         * **/
-        do {
-            printf("\n\n\n\n");
-            next_generation(world);
+        //Initialisation de la page via SDL
+        SDL_Init(SDL_INIT_VIDEO);
+
+        SDL_Window* window = SDL_CreateWindow("Game of Life", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, MAX_COLS * CELL_SIZE, MAX_ROWS * CELL_SIZE, 0);
+        SDL_Renderer* renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+
+        SDL_Event event;
+
+        while(!quit){
+            SDL_PollEvent(&event);
+            if (event.type == SDL_QUIT) {
+                quit = 1;
+            } else{}
             // Afficher le tableau
-            for (int i = 0; i < MAX_ROWS; i++) {
+            drawWorld(renderer, world);
+            /*for (int i = 0; i < MAX_ROWS; i++) {
                 for (int j = 0; j < MAX_COLS; j++) {
                     if(world[i][j]==0){
                         printf(" ");
@@ -71,10 +75,15 @@ int main() {
                         printf("*");
                 }
                 printf("\n");
-            }
-            sleep(2);
+            }*/
+            SDL_Delay(1000);
+            next_generation(world);
             nb_generations++;
-        }while(nb_generations!=15);
+        }
+        // Nettoyez et quittez SDL à la fin
+        SDL_DestroyRenderer(renderer);
+        SDL_DestroyWindow(window);
+        SDL_Quit();
     }
     return 0;
 }
