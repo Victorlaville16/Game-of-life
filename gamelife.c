@@ -95,7 +95,5 @@ int num_neighbors(int x, int y, int tableau[MAX_ROWS][MAX_COLS]){ //prendre en c
         }
     }
     return nbCellulesVivantes;
-
-
-
 }
+

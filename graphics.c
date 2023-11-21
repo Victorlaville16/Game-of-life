@@ -22,5 +22,3 @@ void drawWorld(SDL_Renderer* renderer, int world[MAX_ROWS][MAX_COLS]) {
 
     SDL_RenderPresent(renderer);
 }
-
-
